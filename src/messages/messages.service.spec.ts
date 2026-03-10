@@ -25,16 +25,18 @@ const mockMessage = {
   }),
 };
 
+
 const mockMessageModel = jest.fn().mockImplementation(() => mockMessage);
+
 mockMessageModel.find = jest.fn().mockReturnValue({
-  sort: jest.fn().mockReturnValue({
-    skip: jest.fn().mockReturnValue({
-      limit: jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue([mockMessage]),
-      }),
-    }),
-  }),
+  select: jest.fn().mockReturnThis(),
+  sort: jest.fn().mockReturnThis(),
+  skip: jest.fn().mockReturnThis(),
+  limit: jest.fn().mockReturnThis(),
+  lean: jest.fn().mockReturnThis(),
+  exec: jest.fn().mockResolvedValue([mockMessage]),
 });
+
 mockMessageModel.countDocuments = jest.fn().mockResolvedValue(1);
 
 const mockKafkaProducer = {

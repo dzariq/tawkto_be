@@ -90,56 +90,22 @@ Unit tests run in isolation using mocked dependencies — no real database or Ka
 # Run all unit tests
 npm run test
 
-# Run with coverage report
-npm run test:cov
-
-# Run specific test file
-npm run test messages.service
-npm run test messages.controller
-npm run test kafka.producer
 ```
 
 Expected output:
 
 ```
-PASS src/messages/messages.service.spec.ts
-  MessagesService
-    create()
-      ✓ should save message to MongoDB
-      ✓ should publish event to Kafka after saving
-      ✓ should return saved message
-    findAll()
-      ✓ should return paginated messages
-      ✓ should query correct conversationId
-      ✓ should calculate hasNextPage correctly
-    search()
-      ✓ should call elasticsearch searchMessages
-      ✓ should return empty array for empty query
+PASS src/messages/elasticsearch/messages-es.services.spec.ts
+PASS src/messages/messages.controller.spec.ts (6.046 s)
+PASS src/messages/messages.service.spec.ts (6.362 s)
 
-PASS src/messages/messages.controller.spec.ts
-PASS src/kafka/kafka.producer.service.spec.ts
-PASS src/messages/elasticsearch/messages-es.service.spec.ts
+Test Suites: 3 passed, 3 total
+Tests:       19 passed, 19 total
+Snapshots:   0 total
+Time:        8.259 s, estimated 11 s
+Ran all test suites.
+
 ```
-
-### API Integration Tests (e2e)
-
-Integration tests connect to real services. Make sure Docker is running before executing.
-
-```bash
-# Make sure all services are running
-docker-compose up -d
-
-# Run e2e tests
-npm run test:e2e
-```
-
-Integration tests cover:
-- `POST /auth/login` — valid and invalid credentials
-- `POST /api/messages` — create, validation, XSS sanitization, auth
-- `GET /api/conversations/:id/messages` — pagination, sorting, auth
-- `GET /api/conversations/:id/messages/search` — search, empty query, auth
-
----
 
 ## 3. Testing with Postman
 
